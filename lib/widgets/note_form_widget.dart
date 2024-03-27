@@ -31,64 +31,73 @@ class NoteFormWidget extends StatelessWidget {
           children: [
             Row(
               children: [
-                Switch(
-                  value: isImportant,
-                  onChanged: onChangeIsImportant,
-                ),
+                Switch(value: isImportant, onChanged: onChangeIsImportant),
                 Expanded(
                   child: Slider(
                     value: number.toDouble(),
                     min: 0,
                     max: 5,
-                    onChanged: (value) => onChangeNumber(value.toInt()),
+                    onChanged: (value) => onChangeNumber(
+                      value.toInt(),
+                    ),
                   ),
                 ),
               ],
             ),
-            _buildTitleField(),
-            const SizedBox(height: 8),
-            _buildDescriptionField(),
+            buildTitleField(),
+            const SizedBox(
+              height: 8,
+            ),
+            buildDescriptionField(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTitleField() {
+  buildTitleField() {
     return TextFormField(
-      maxLines: null,
+      maxLines: 1,
       initialValue: title,
-      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 24,
+      ),
+      onChanged: onChangeTitle,
+      validator: (title) {
+        if (title!.isEmpty) {
+          return 'The title cannot be empty';
+        }
+        return null;
+      },
       decoration: const InputDecoration(
         border: InputBorder.none,
         hintText: 'Title',
         hintStyle: TextStyle(color: Colors.grey),
       ),
-      onChanged: onChangeTitle,
-      validator: (title) {
-        return title != null && title.isNotEmpty
-            ? 'The title cannot be empty'
-            : null;
-      },
     );
   }
 
-  Widget _buildDescriptionField() {
+  buildDescriptionField() {
     return TextFormField(
-      maxLines: null,
+      maxLines: 5,
       initialValue: description,
-      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-      decoration: const InputDecoration(
-        border: InputBorder.none,
-        hintText: 'Type something...',
-        hintStyle: TextStyle(color: Colors.grey),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 24,
       ),
       onChanged: onChangeDescription,
       validator: (desc) {
-        return desc != null && desc.isNotEmpty
-            ? 'The description cannot be empty'
-            : null;
+        if (desc!.isEmpty) {
+          return 'The desc cannot be empty';
+        }
+        return null;
       },
+      decoration: const InputDecoration(
+        border: InputBorder.none,
+        hintText: 'Type someting ...',
+        hintStyle: TextStyle(color: Colors.grey),
+      ),
     );
   }
 }

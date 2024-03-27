@@ -7,22 +7,20 @@ final _lightColors = [
   Colors.lightBlue.shade300,
   Colors.lightGreen.shade300,
   Colors.orange.shade300,
-  Colors.pinkAccent.shade400,
-  Colors.tealAccent.shade400,
+  Colors.pinkAccent.shade100,
+  Colors.tealAccent.shade100,
 ];
 
 class NoteCardWidget extends StatelessWidget {
-  const NoteCardWidget({super.key, required this.note, required this.index});
-
   final Note note;
   final int index;
+  const NoteCardWidget({super.key, required this.note, required this.index});
 
   @override
   Widget build(BuildContext context) {
     final time = DateFormat.yMMMd().add_jms().format(note.createdTime);
-    final minHeight = _getMinHeight(index);
+    final minHeight = getMinHeight(index);
     final color = _lightColors[index % _lightColors.length];
-
     return Card(
       color: color,
       child: Container(
@@ -32,16 +30,20 @@ class NoteCardWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(time, style: TextStyle(color: Colors.grey.shade700)),
+            Text(
+              time,
+              style: TextStyle(color: Colors.grey.shade700),
+            ),
             const SizedBox(
               height: 4,
             ),
             Text(
               note.title,
               style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold
+              ),
             )
           ],
         ),
@@ -49,14 +51,16 @@ class NoteCardWidget extends StatelessWidget {
     );
   }
 
-  double _getMinHeight(int index) {
+  double getMinHeight(int index) {
     switch (index % 4) {
       case 0:
-      case 3:
         return 100;
       case 1:
+        return 150;
       case 2:
         return 150;
+      case 3:
+        return 100;
       default:
         return 100;
     }
